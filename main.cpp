@@ -9,6 +9,5 @@ int main()
 
     st.insert(phrase, root);
 
-    std::cout << "\n";
     return 0;
 }

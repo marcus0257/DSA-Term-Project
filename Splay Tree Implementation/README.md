@@ -9,4 +9,5 @@ Required Packages: <br>
   - Node
   - Express
   - Nodemon (if running in local browser)
+  - Body Parser
   

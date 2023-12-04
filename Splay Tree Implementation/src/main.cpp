@@ -1,7 +1,7 @@
 #include "splay.h"
 #include <fstream>
 #include <sstream>
-
+//this file becomes backend.exe
 int main(int argc, char* argv[]){
     //set up tree based on state
     std::ifstream ifs("src/state.txt");

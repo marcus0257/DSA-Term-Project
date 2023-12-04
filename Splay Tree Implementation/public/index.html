@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autofill Demo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="text">
+            <p>SPLAY TREE AUTOFILL DEMO</p>
+        </div>
+        <form action = "/submit" method="POST" class="search-bar" onsubmit="submitForm(event)">
+            <input type = "text" placeholder="Enter Search" id = "input-box" name = "q" autocomplete="off">
+            <button type="submit"><img src="../images/mag-glass.png"></button>
+        </form>
+        <div class="result-box">
+        </div>
+        <div class="tree-display"></div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>

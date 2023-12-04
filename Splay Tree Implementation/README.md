@@ -1,6 +1,6 @@
 # Splay Tree Implementation
 For our splay tree implementation we created a search autofiller. The following changes were made to our original splay tree class in order to acheive this:
-  - Updated splayNode with 2 additional data members; bool purple and std::string query
+  - Updated splayNode with 2 additional data members; bool purple(representing if the query has already been searched) and std::string query(representing the autofill result)
   - Updated constrcutors and insert function to handle these extra parameters
   - Added LevelOrder function that writes the tree structure to the output file in level order
   - Updated InOrder function to write tree structure to output file
@@ -11,5 +11,5 @@ Required Packages: <br>
   - Nodemon (if running in local browser)
   - Body Parser
 
-We set up a simple web page that contains a form which the user can submit their search into. The form sends a POST to the express server we are using as the backend. The server uses child process
+We set up a simple web page that contains a form which the user can submit their search into. The form sends a POST to the express server we are using as the backend. The server then uses child processes to run c++ executables which update a text file containing the current state of the tree, and a json file containing the autofill results, their original index in the list and whehther or not to be displayed as purple in the autofiller. 
   

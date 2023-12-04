@@ -6,7 +6,6 @@ For our splay tree implementation we created a search autofiller. The following 
   - Updated InOrder function to write tree structure to output file
 
 Required Packages:
-  - Node.Js
   - Node
   - Express
   - Nodemon (if running in local browser)

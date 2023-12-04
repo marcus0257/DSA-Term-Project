@@ -11,6 +11,7 @@ Required Packages:
   - Nodemon (if running in local browser)
   - Body Parser
 
+![Alt text](https://github.com/Jusconn/DSA-Term-Project/blob/main/imgs/demo-home.png?raw=true)
 We set up a simple web page that contains a form which the user can submit their search into. The form sends a POST to the express server we are using as the backend. The server then uses child processes to run c++ executables which update a text file containing the current state of the tree, and a json file containing the autofill results, their original index in the list and whether or not to be displayed as purple in the autofiller.
 
 The main.cpp and main_2.cpp were compiled using the following lines inside of the src terminal

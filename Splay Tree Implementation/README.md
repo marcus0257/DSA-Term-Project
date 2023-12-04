@@ -10,4 +10,6 @@ Required Packages: <br>
   - Express
   - Nodemon (if running in local browser)
   - Body Parser
+
+We set up a simple web page that contains a form which the user can submit their search into. The form sends a POST to the express server we are using as the backend. The server uses child process
   

@@ -1,48 +1,52 @@
-#pragma once
+#ifndef SPLAY_H
+#define SPLAY_H
 
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
 #include <string>
 
-struct SplayNode // node declaration
-{
-    std::string key;
+class SplayNode {
+private:
+    int key;  // Change from std::string to int
     SplayNode* left;
     SplayNode* right;
-};
+    bool color = false;
 
-class SplayTree
-{
 public:
-    //right rotation
-    SplayNode* RR_Rotate(SplayNode* k2);
+    SplayNode();
+    SplayNode(int key);  // Change from std::string to int
+    ~SplayNode();
 
-    //left rotation
-    SplayNode* LL_Rotate(SplayNode* k2);
-
-    //splay, bring given value to the root of the tree
-    SplayNode* Splay(const std::string& key, SplayNode* root);
-
-    //creates new node
-    SplayNode* New_Node(const std::string& key);
-
-    //inserts node with given key
-    SplayNode* insert(const std::string& key, SplayNode* root);
-
-    //deletes node with given key
-    SplayNode* Delete(const std::string& key, SplayNode* root);
-
-    //returns the given key at the root of the tree
-    SplayNode* Search(const std::string& key, SplayNode* root);
-
-    //prints inorder traversal
-    void InOrder(SplayNode* root);
-
-    //prints preorder traversal
-    void PreOrder(SplayNode* root);
-
-    //prints postorder traversal
-    void PostOrder(SplayNode* root);
-
+    friend class SplayTree;
 };
+
+class SplayTree {
+private:
+    SplayNode* root;
+    SplayNode* rotateLeft(SplayNode* root);
+    SplayNode* rotateRight(SplayNode* root);
+    SplayNode* splay(int key, SplayNode* root);  // Change from std::string to int
+    SplayNode* insert(int key, SplayNode* root);  // Change from std::string to int
+    SplayNode* remove(int key, SplayNode* root);  // Change from std::string to int
+    void preorder(SplayNode* root);
+    void inorder(SplayNode* root);
+    void postorder(SplayNode* root);
+    //void destroy(SplayNode* root);
+    SplayNode* search(int key, SplayNode* root);  // Change from std::string to int
+    SplayNode* New_Node(int key);  // Change from std::string to int
+
+public:
+    SplayTree();
+    ~SplayTree();
+
+    void insert(int key);  // Change from std::string to int
+    void remove(int key);  // Change from std::string to int
+    void preorder();
+    void inorder();
+    void postorder();
+    //void destroy();
+    SplayNode* search(int key);  // Change from std::string to int
+};
+
+#endif

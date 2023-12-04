@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+//this file beocomes json.exe
 //this file writes the info.json
 int main(){
     std::ofstream outfile("public/info.json");

@@ -8,14 +8,14 @@
 
 class SplayNode {
 private:
-    int key;  // Change from std::string to int
+    std::string key;  // Change from int to std::string
     SplayNode* left;
     SplayNode* right;
     bool color = false;
 
 public:
     SplayNode();
-    SplayNode(int key);  // Change from std::string to int
+    SplayNode(std::string key);  // Change from int to std::string
     ~SplayNode();
 
     friend class SplayTree;
@@ -26,27 +26,27 @@ private:
     SplayNode* root;
     SplayNode* rotateLeft(SplayNode* root);
     SplayNode* rotateRight(SplayNode* root);
-    SplayNode* splay(int key, SplayNode* root);  // Change from std::string to int
-    SplayNode* insert(int key, SplayNode* root);  // Change from std::string to int
-    SplayNode* remove(int key, SplayNode* root);  // Change from std::string to int
+    SplayNode* splay(std::string key, SplayNode* root);  // Change from int to std::string
+    SplayNode* insert(std::string key, SplayNode* root);  // Change from int to std::string
+    SplayNode* remove(std::string key, SplayNode* root);  // Change from int to std::string
     void preorder(SplayNode* root);
     void inorder(SplayNode* root);
     void postorder(SplayNode* root);
     //void destroy(SplayNode* root);
-    SplayNode* search(int key, SplayNode* root);  // Change from std::string to int
-    SplayNode* New_Node(int key);  // Change from std::string to int
+    SplayNode* search(std::string key, SplayNode* root);  // Change from int to std::string
+    SplayNode* New_Node(std::string key);  // Change from int to std::string
 
 public:
     SplayTree();
     ~SplayTree();
 
-    void insert(int key);  // Change from std::string to int
-    void remove(int key);  // Change from std::string to int
+    void insert(std::string key);  // Change from int to std::string
+    void remove(std::string key);  // Change from int to std::string
     void preorder();
     void inorder();
     void postorder();
     //void destroy();
-    SplayNode* search(int key);  // Change from std::string to int
+    SplayNode* search(std::string key);  // Change from int to std::string
 };
 
 #endif

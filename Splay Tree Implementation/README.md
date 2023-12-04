@@ -5,7 +5,8 @@ For our splay tree implementation we created a search autofiller. The following 
   - Added LevelOrder function that writes the tree structure to the output file in level order
   - Updated InOrder function to write tree structure to output file
 
-Required Packages: <br>
+Required Packages:
+  - Node.Js
   - Node
   - Express
   - Nodemon (if running in local browser)

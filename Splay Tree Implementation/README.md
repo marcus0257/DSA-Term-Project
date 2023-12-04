@@ -17,5 +17,7 @@ The main.cpp and main_2.cpp were compiled using the following lines inside of th
 - g++ main.cpp splay.cpp -o backend.exe
 - g++ main_2.cpp -o json.exe
 
-*EXECUTABLES WERE NOT INCLUDED IN THIS REPOSITORY COMPILE BEFORE ATTEMPTING TO RUN SERVER*
+Executables were not include in this repository, please compile on your own before trying to run server!
+
+
   

@@ -14,8 +14,7 @@ Required Packages:
 We set up a simple web page that contains a form which the user can submit their search into. The form sends a POST to the express server we are using as the backend. The server then uses child processes to run c++ executables which update a text file containing the current state of the tree, and a json file containing the autofill results, their original index in the list and whether or not to be displayed as purple in the autofiller.
 
 The main.cpp and main_2.cpp were compiled using the following lines inside of the src terminal
-g++ main.cpp splay.cpp -o backend.exe
-g++ main_2.cpp -o json.exe
-
+- g++ main.cpp splay.cpp -o backend.exe
+- g++ main_2.cpp -o json.exe
 *EXECUTABLES WERE NOT INCLUDED IN THIS REPOSITORY COMPILE BEFORE ATTEMPTING TO RUN SERVER*
   

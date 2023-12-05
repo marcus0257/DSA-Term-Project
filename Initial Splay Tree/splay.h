@@ -11,7 +11,6 @@ private:
     int key;  // Change from std::string to int
     SplayNode* left;
     SplayNode* right;
-    bool color = false;
 
 public:
     SplayNode();

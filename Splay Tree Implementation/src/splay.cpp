@@ -1,211 +1,276 @@
-#include <iostream>
 #include "splay.h"
 
 using namespace std;
 
-// Constructor for a node that takes a key
-SplayNode::SplayNode(std::string key) {
-    this->key = key;
-    this->left = nullptr;
-    this->right = nullptr;
+//this method is responsible for rotating the given nodes to the right
+SplayNode* SplayTree::RR_Rotate(SplayNode* k2)
+{
+    SplayNode* k1 = k2->left;
+    k2->left = k1->right;
+    k1->right = k2;
+    return k1;
 }
 
-// Method for creating a new node
-SplayNode* SplayTree::New_Node(std::string key) {
-    // Creating a temp node with two empty children
-    SplayNode* p_node = new SplayNode(key);
+//this method is responsible for rotating given nodes to the left
+SplayNode* SplayTree::LL_Rotate(SplayNode* k2)
+{
+    SplayNode* k1 = k2->right;
+    k2->right = k1->left;
+    k1->left = k2;
+    return k1;
+}
+
+//this is the method which splays the node, brings the node to the root of the tree
+SplayNode* SplayTree::Splay(int key, SplayNode* root)
+{
+    //if node is null, return nullptr
+    if (!root)
+        return nullptr;
+
+    //create two empty trees for splaying 
+    SplayNode header;
+    header.left = header.right = nullptr;
+    SplayNode* LeftTreeMax = &header;
+    SplayNode* RightTreeMin = &header;
+
+    while (1)
+    {
+        //if given value is less than root data
+        if (key < root->key)
+        {
+            //if root left is a nullptr
+            if (!root->left)
+                break;
+
+            //if given value is less than root->left's value, perform a right rotation to bring the tree closer to the root
+            if (key < root->left->key)
+            {
+                root = RR_Rotate(root);
+                if (!root->left)
+                    break;
+            }
+
+            //use temp tree to reassemble the root
+            RightTreeMin->left = root;
+            RightTreeMin = RightTreeMin->left;
+            root = root->left;
+            RightTreeMin->left = nullptr;
+        }
+
+        //if given value is greater than root data
+        else if (key > root->key)
+        {
+            //if there is no right child
+            if (!root->right)
+                break;
+
+            //if right child is greater than given data
+            if (key > root->right->key)
+            {
+                //perform a left rotation to bring node closer to the root
+                root = LL_Rotate(root);
+                if (!root->right)
+                    break;
+            }
+
+            //reassemble the tree using opposite temp tree
+            LeftTreeMax->right = root;
+            LeftTreeMax = LeftTreeMax->right;
+            root = root->right;
+            LeftTreeMax->right = nullptr;
+        }
+        else
+            break;
+    }
+
+    //assemble the root tree now that data has been splayed closer to the root
+    LeftTreeMax->right = root->left;
+    RightTreeMin->left = root->right;
+    root->left = header.right;
+    root->right = header.left;
+    return root;
+}
+
+SplayNode* SplayTree::New_Node(int key,std::string query,bool purple)
+{
+    //creating a temp node with two empty children
+    SplayNode* p_node = new SplayNode;
+    p_node->key = key;
+    p_node->query = query;
+    p_node->purple = purple;
     p_node->left = p_node->right = nullptr;
     return p_node;
 }
 
-// Method for rotating a node to the right
-SplayNode* SplayTree::rotateRight(SplayNode* OldKey) {
-    SplayNode* NewKey = OldKey->left;
-    OldKey->left = NewKey->right;
-    NewKey->right = OldKey;
-    return NewKey;
-}
+SplayNode* SplayTree::insert(int key,std::string query, bool purple, SplayNode* root)
+{
+    static SplayNode* p_node = nullptr;
+    //if p_node was not created, create a new node, else set value equal to given key
+    if (!p_node)
+        p_node = New_Node(key,query,purple);
+    else
+        p_node->key = key;
 
-// Method for rotating a node to the left
-SplayNode* SplayTree::rotateLeft(SplayNode* OldKey) {
-    SplayNode* NewKey = OldKey->right;
-    OldKey->right = NewKey->left;
-    NewKey->left = OldKey;
-    return NewKey;
-}
-
-// Method for splaying a node to the root
-SplayNode* SplayTree::splay(std::string key, SplayNode* root) {
-    // If the tree is empty, return nullptr
-    if (!root) {
-        return nullptr;
-    }
-
-    // Creating a temporary left, right, and parent node
-    SplayNode parent;
-    SplayNode* leftTree = &parent;
-    SplayNode* rightTree = &parent;
-
-    // Infinite loop to keep rotating until key is closer to the root of the tree
-    while (true) {
-        // If the key is less than the root, rotate right
-        if (key < root->key) {
-            // If the root has no left child, break the loop
-            if (!root->left)
-                break;
-
-            // If the key is less than the left child, rotate right twice
-            if (key < root->left->key) {
-                root = rotateRight(root);
-                if (!root->left)
-                    break;
-            }
-            rightTree->left = root;
-            rightTree = rightTree->left;
-            root = root->left;
-            rightTree->left = nullptr;
-        }
-        // If the key is greater than the root, rotate left twice
-        else if (key > root->key) {
-            if (!root->right)
-                break;
-
-            if (key > root->right->key) {
-                root = rotateLeft(root);
-                if (!root->right)
-                    break;
-            }
-            leftTree->right = root;
-            leftTree = leftTree->right;
-            root = root->right;
-            leftTree->right = nullptr;
-        } else
-            break;
-    }
-
-    // Update tree with temporary left and right tree
-    leftTree->right = root->left;
-    rightTree->left = root->right;
-    root->left = parent.right;
-    root->right = parent.left;
-    return root;
-}
-
-// Method for inserting a node into the tree
-SplayNode* SplayTree::insert(std::string key, SplayNode* root) {
-    // Creating a new temporary variable
-    SplayNode* temp = nullptr;
-
-    // Initializing temp with the value we want to insert
-    if (!temp) {
-        temp = New_Node(key);
-    } else {
-        temp->key = key;
-    }
-
-    // If tree is empty, set key to the value we want to insert
-    if (!root) {
-        root = temp;
-        temp = nullptr;
+    //if root is a nullptr, set root equal to given value and return tree
+    if (!root)
+    {
+        root = p_node;
+        p_node = nullptr;
         return root;
     }
 
-    // Splay the key to the root of the tree, or move the key closer to the root of the tree
-    root = splay(key, root);
+    //rotate the tree to bring inserted value to the root of the tree
+    root = Splay(key, root);
 
-    // If the key is less than the root, set the left child of the root to the key
-    if (key < root->key) {
-        temp->left = root->left;
-        temp->right = root;
+    //if value is less than root data, we will insert it to the left subtree
+    if (key < root->key)
+    {
+        
+        p_node->left = root->left;
+        p_node->right = root;
         root->left = nullptr;
-        root = temp;
+        root = p_node;
     }
-    // If the key is greater than the root, set the right child of the root to the key
-    else if (key > root->key) {
-        temp->right = root->right;
-        temp->left = root;
+        //else insert it to the right subtree
+    else if (key > root->key)
+    {
+        p_node->right = root->right;
+        p_node->left = root;
         root->right = nullptr;
-        root = temp;
+        root = p_node;
     }
-    // Tree is empty and return new root value
-    else {
+    else
         return root;
-    }
-    temp = nullptr;
+
+    //destroy p_node 
+    p_node = nullptr;
     return root;
 }
 
-// Method for removing a node from the tree
-SplayNode* SplayTree::remove(std::string key, SplayNode* root) {
-    // Check if the current root is null (base case for recursion)
-    if (!root) {
+// Delete a node with the given key from the splay tree
+SplayNode* SplayTree::Delete(int key, SplayNode* root)
+{
+    SplayNode* temp;
+    if (!root)
         return nullptr;
-    }
 
-    // Check if the key to remove is equal to the key of the current root
-    if (key == root->key) {
-        SplayNode* temp;
+    // Splay the tree with the given key
+    root = Splay(key, root);
 
-        // If the left child is null, set temp to the current root and return null
-        if (!root->left) {
+    if (key != root->key)
+        return root;
+    else
+    {
+        // Remove the node with the given key
+        if (!root->left)
+        {
             temp = root;
-            return nullptr;
+            root = root->right;
+        }
+        else
+        {
+            temp = root;
+            root = Splay(key, root->left);
+            root->right = temp->right;
         }
 
-        // If either the left or right child is null, update temp accordingly
-        if ((!root->right) != (!root->left)) {
-            if (!root->left) {
-                temp = root->right;
-            } else {
-                temp = root->left;
-            }
-
-            // Delete the current root and return the updated temp node
-            delete root;
-            return temp;
-        }
-
-        // If both children are present, find the successor (temp) in the right subtree
-        temp = root->right;
-
-        while (temp->left) {
-            temp = temp->left;
-        }
-
-        // Replace the key of the current root with the successor key
-        root->key = temp->key;
-
-        // Recursively remove the successor from the right subtree
-        root->right = remove(temp->key, root->right);
-
-        // Return the updated root
+        // Delete the removed node
+        delete temp;
         return root;
     }
+}
 
-    // If the key to remove is less than the current root's key, recursively remove from the left subtree
-    if (key < root->key) {
-        root->left = remove(key, root->left);
-    } else {
-        // If the key to remove is greater than or equal to the current root's key,
-        // recursively remove from the right subtree
-        root->right = remove(key, root->right);
+// Search for a node with the given key in the splay tree
+SplayNode* SplayTree::Search(int key, SplayNode* root)
+{
+    // Splay the tree with the given key, bringing the searched node to the root
+    this->root = Splay(key, root);
+    this->root->purple = 1;
+    return root;
+}
+
+// Perform an in-order traversal of the splay tree and print node information
+void SplayTree::InOrder(std::ofstream& outfile, SplayNode* root)
+{
+    if (root)
+    {
+        //std::ofstream outfile("state.txt");
+
+        // Visit left subtree
+        InOrder(outfile, root->left);
+        if(!root->purple)
+        outfile << root->key << " " << root->purple << " " << root->query << std::endl;
+
+        // Visit right subtree
+        InOrder(outfile, root->right);
     }
-
-    // Return null (no structural change in the current subtree)
-    return nullptr;
+    return;
 }
 
-// Recursive call
-void SplayTree::insert(std::string key) {
-    this->root = this->insert(key, this->root);
+// Perform a pre-order traversal of the splay tree and print node information
+void SplayTree::PreOrder(SplayNode* root)
+{
+    if (root)
+    {
+        // Print node information
+        cout << "key: " << root->key;
+        if (root->left)
+            cout << " | left: " << root->left->key;
+        if (root->right)
+            cout << " | right: " << root->right->key;
+        cout << "\n";
+
+        // Visit left subtree
+        PreOrder(root->left);
+        
+        // Visit right subtree
+        PreOrder(root->right);
+    }
 }
 
-// Recursive call
-void SplayTree::remove(std::string key) {
-    this->root = this->remove(key, this->root);
+// Perform a post-order traversal of the splay tree and print node information
+void SplayTree::PostOrder(SplayNode* root)
+{
+    if (root)
+    {
+        // Visit left subtree
+        PostOrder(root->left);
+        
+        // Visit right subtree
+        PostOrder(root->right);
+
+        // Print node information
+        cout << "key: " << root->key;
+        if (root->left)
+            cout << " | left: " << root->left->key;
+        if (root->right)
+            cout << " | right: " << root->right->key;
+        cout << "\n";
+    }
 }
 
-// Recursive call
-SplayNode* SplayTree::search(std::string key) {
-    return this->search(key, this->root);
+void SplayTree::LevelOrder(std::ofstream& outfile, SplayNode* root)
+{   if(root)
+    {std::queue<SplayNode*> q;
+    q.push(root);
+
+    while (!q.empty())
+    {
+        SplayNode* current = q.front();
+        q.pop();
+
+        // Print node information
+        if(current->purple)
+        outfile << current->key << " " << current->purple << " " << current->query << std::endl;
+
+        // Enqueue left childs
+        if (current->left)
+            q.push(current->left);
+
+        // Enqueue right child
+        if (current->right)
+            q.push(current->right);
+    }
+    }
+    return;
 }

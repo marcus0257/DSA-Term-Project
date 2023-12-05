@@ -310,8 +310,6 @@ SplayNode* SplayTree::search(int key, SplayNode* root) {
     // Update the root pointer in the class to reflect the new root after splaying
     this->root = root;
 
-    this->root->color = 1;
-
     // Now, you can access the root node and perform any other necessary operations
     return root;
 }

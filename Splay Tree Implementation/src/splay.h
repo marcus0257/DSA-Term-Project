@@ -1,52 +1,59 @@
-#ifndef SPLAY_H
-#define SPLAY_H
+#pragma once
 
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
 #include <string>
+#include <queue>
+#include <fstream>
 
-class SplayNode {
-private:
-    std::string key;  // Change from int to std::string
+struct SplayNode // node declaration
+{
+    int key;
+    std::string query;
+    bool purple;
     SplayNode* left;
     SplayNode* right;
-    bool color = false;
-
-public:
-    SplayNode();
-    SplayNode(std::string key);  // Change from int to std::string
-    ~SplayNode();
-
-    friend class SplayTree;
 };
 
-class SplayTree {
-private:
-    SplayNode* root;
-    SplayNode* rotateLeft(SplayNode* root);
-    SplayNode* rotateRight(SplayNode* root);
-    SplayNode* splay(std::string key, SplayNode* root);  // Change from int to std::string
-    SplayNode* insert(std::string key, SplayNode* root);  // Change from int to std::string
-    SplayNode* remove(std::string key, SplayNode* root);  // Change from int to std::string
-    void preorder(SplayNode* root);
-    void inorder(SplayNode* root);
-    void postorder(SplayNode* root);
-    //void destroy(SplayNode* root);
-    SplayNode* search(std::string key, SplayNode* root);  // Change from int to std::string
-    SplayNode* New_Node(std::string key);  // Change from int to std::string
-
+class SplayTree
+{
 public:
-    SplayTree();
-    ~SplayTree();
+SplayNode* root;
+    //right rotation
+    SplayNode* RR_Rotate(SplayNode* k2);
 
-    void insert(std::string key);  // Change from int to std::string
-    void remove(std::string key);  // Change from int to std::string
-    void preorder();
-    void inorder();
-    void postorder();
-    //void destroy();
-    SplayNode* search(std::string key);  // Change from int to std::string
+    //left rotation
+    SplayNode* LL_Rotate(SplayNode* k2);
+
+    //splay, bring given value to the root of the tree
+    SplayNode* Splay(int key, SplayNode* root);
+
+    //creates new node
+    SplayNode* New_Node(int key, std::string query,bool purple);
+
+    //inserts node with given key
+    SplayNode* insert(int key, std::string query,bool purple, SplayNode* root);
+    void insert(int key, std::string query,bool purple){this->root = insert(key,query,purple,root);};
+
+
+    //deletes node with given key
+    SplayNode* Delete(int key, SplayNode* root);
+
+    //returns the given key at the root of the tree
+    SplayNode* Search(int key, SplayNode* root);
+
+    //prints inorder traversal
+    void InOrder(std::ofstream& outfile, SplayNode* root);
+
+    //prints preorder traversal
+    void PreOrder(SplayNode* root);
+
+    //prints postorder traversal
+    void PostOrder(SplayNode* root);
+
+    void LevelOrder(std::ofstream& outfile, SplayNode* root);
+
+
 };
-
-#endif
+//added query to insert and node creation and as a data member

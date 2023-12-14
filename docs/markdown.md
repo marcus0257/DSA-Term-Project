@@ -1,55 +1,39 @@
-# Markdown Files
+# Getting Started
 
-Whether you write your book's content in Jupyter Notebooks (`.ipynb`) or
-in regular markdown files (`.md`), you'll write in the same flavor of markdown
-called **MyST Markdown**.
-This is a simple file to help you get started and show off some syntax.
+To use this project, follow these steps:
 
-## What is MyST?
+1. **Clone the repository from GitHub:**
 
-MyST stands for "Markedly Structured Text". It
-is a slight variation on a flavor of markdown called "CommonMark" markdown,
-with small syntax extensions to allow you to write **roles** and **directives**
-in the Sphinx ecosystem.
+    ```bash
+    git clone DSA-Term-Project
+    ```
 
-For more about MyST, see [the MyST Markdown Overview](https://jupyterbook.org/content/myst.html).
+2. **Change into the project directory:**
 
-## Sample Roles and Directives
+    ```bash
+    cd project
+    ```
 
-Roles and directives are two of the most powerful tools in Jupyter Book. They
-are kind of like functions, but written in a markup language. They both
-serve a similar purpose, but **roles are written in one line**, whereas
-**directives span many lines**. They both accept different kinds of inputs,
-and what they do with those inputs depends on the specific role or directive
-that is being called.
+3. **Install the required packages:**
 
-Here is a "note" directive:
+    ```bash
+    npm install
+    ```
 
-```{note}
-Here is a note
-```
+4. **Run the project:**
 
-It will be rendered in a special box when you build your book.
+    ```bash
+    npm run dev
+    ```
 
-Here is an inline directive to refer to a document: {doc}`markdown-notebooks`.
+    This command will start the server using nodemon, which automatically restarts the server when changes are detected.
 
+5. **Open your browser and visit [http://localhost:3000](http://localhost:3000) to interact with the project.**
 
-## Citations
+## Download Files
 
-You can also cite references that are stored in a `bibtex` file. For example,
-the following syntax: `` {cite}`holdgraf_evidence_2014` `` will render like
-this: {cite}`holdgraf_evidence_2014`.
+Download the necessary files for the project:
 
-Moreover, you can insert a bibliography into your page with this syntax:
-The `{bibliography}` directive must be used for all the `{cite}` roles to
-render properly.
-For example, if the references for your book are stored in `references.bib`,
-then the bibliography is inserted with:
-
-```{bibliography}
-```
-
-## Learn more
-
-This is just a simple starter to get you started.
-You can learn a lot more at [jupyterbook.org](https://jupyterbook.org).
+- [Download File 1](#)
+- [Download File 2](#)
+- [Download File 3](#)

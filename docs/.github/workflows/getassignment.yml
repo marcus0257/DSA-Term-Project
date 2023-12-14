@@ -1,0 +1,35 @@
+name: Create badge issues (Do not run manually)
+on:
+  workflow_dispatch
+
+# once you edit, change the name
+
+jobs:
+  check-contents:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    # Install dependencies
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+    
+    - name: Install Utils
+      run: |
+        pip install git+https://github.com/introcompsys/courseutils@main
+    - name: Get badge requirements
+      run: |
+        # prepare badge lines
+        pretitle="prepare-"$(sysgetbadgedate --prepare)
+        sysgetassignment --type prepare | gh issue create --title $pretitle --label prepare --body-file -
+        # practice badge lines
+        rtitle="practice-"$(sysgetbadgedate --practice)
+        sysgetassignment --type practice | gh issue create --title $rtitle --label practice --body-file -
+       
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#  edit the run step above for the level(s) you want. 
+#  You should keep the prepare, because they are required for experience badges 
+#     You may choose to get only the practice or only the practice (and change this any time) 

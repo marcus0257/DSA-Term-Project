@@ -1,0 +1,46 @@
+name: Experience Reflection (inclass)
+on:
+  workflow_dispatch
+
+
+jobs:
+  createPullRequest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get current date
+        id: date
+        run: |
+          echo "date=$(date +'%Y-%m-%d')"
+          echo "date=$(date +'%Y-%m-%d')" >> "$GITHUB_ENV"
+
+
+      - name: Create file
+        run: |
+          cp .templates/experience-reflect.md experiences/experience-$date.md
+          echo $date
+          echo "$date"
+          
+          
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: initialize experience report
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          base: main
+          branch: experience-${{ env.date }}
+          # branch-suffix: timestamp
+          title: 'Experience Badge ${{ env.date }}'
+          body: |
+            Checklist:
+            - [ ] Merge prepare work into this PR's
+            - [ ] Link prepare issue to this PR
+            - [ ] Complete experience reflection
+            - [ ] Include name for matching to prismia
+          

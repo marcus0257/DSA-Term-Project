@@ -2,46 +2,46 @@ title: "Welcome To Marcus Diaz Documentation"
 author: "Marcus Diaz"
 logo: logo.png
 
-execute:
-  execute_notebooks: "cache"
-
-latex:
-  latex_documents:
-    targetname: book.tex
-
-bibtex_bibfiles:
-  - references.bib
-
-# Information about where the book exists on the web
-repository:
-  url: https://github.com/marcus0257/DSA-Term-Project
-  path_to_book: docs
-  branch: main
-
-html:
-  use_issues_button: true
-  use_repository_button: true
-
-github:
-  workflows:
-    main:
-      jobs:
-        build:
-          runs-on: ubuntu-latest
-          steps:
-            - name: Checkout Repository
-              uses: actions/checkout@v2
-
-            - name: Set up Python
-              uses: actions/setup-python@v2
-              with:
-                python-version: 3.x
-
-            - name: Install dependencies
-              run:
-                python -m pip install --upgrade pip
-                pip install -r requirements.txt  # Adjust as needed
-
-            - name: Build Documentation
-              run: html build docs
-
+  execute:
+          execute_notebooks: "cache"
+        
+        latex:
+          latex_documents:
+            targetname: book.tex
+        
+        bibtex_bibfiles:
+          - references.bib
+        
+        # Information about where the book exists on the web
+        repository:
+          url: https://github.com/marcus0257/DSA-Term-Project
+          path_to_book: docs
+          branch: main
+        
+        html:
+          use_issues_button: true
+          use_repository_button: true
+        
+        github:
+          workflows:
+            main:
+              jobs:
+                build:
+                  runs-on: ubuntu-latest
+                  steps:
+                    - name: Checkout Repository
+                      uses: actions/checkout@v2
+        
+                    - name: Set up Python
+                      uses: actions/setup-python@v2
+                      with:
+                        python-version: 3.x
+        
+                    - name: Install dependencies
+                      run:
+                        python -m pip install --upgrade pip
+                        pip install -r requirements.txt  # Adjust as needed
+        
+                    - name: Build Documentation
+                      run: html build docs
+      

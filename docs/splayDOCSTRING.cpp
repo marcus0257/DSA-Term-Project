@@ -2,7 +2,6 @@
  * @file splay.cpp
  * @brief Implementation of Splay Tree data structure in C++.
  */
-
 #include <iostream>
 
 /**

@@ -2,15 +2,12 @@ title: "Welcome To Marcus Diaz Documentation"
 author: "Marcus Diaz"
 logo: logo.png
 
-
 execute:
   execute_notebooks: "cache"
-
 
 latex:
   latex_documents:
     targetname: book.tex
-
 
 bibtex_bibfiles:
   - references.bib
@@ -21,10 +18,15 @@ repository:
   path_to_book: docs  
   branch: main  
 
-
 html:
   use_issues_button: true
   use_repository_button: true
+  
+  sphinx:
+    extra_extensions:
+      - 'breathe'
+    config:
+      add_module_names: False
 
 github:
   workflows:
